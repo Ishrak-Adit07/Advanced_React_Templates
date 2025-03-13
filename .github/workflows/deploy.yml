@@ -30,11 +30,9 @@ jobs:
         run: npm run build
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2
-        with:
-          publish-dir: client/build
-          production-branch: main
-          deploy-message: "Automated deployment from GitHub Actions"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --dir=client/build --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
