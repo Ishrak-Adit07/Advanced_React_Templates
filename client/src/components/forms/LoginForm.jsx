@@ -19,7 +19,7 @@ const LoginForm = () => {
       const loginResponseData = true;
 
       if (loginResponseData) {
-        navigate("/user/dashboard");
+        navigate("/");
         setError(null);
       }
     } catch (err) {

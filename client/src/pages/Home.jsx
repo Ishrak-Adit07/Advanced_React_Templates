@@ -18,6 +18,9 @@ const Home = () => {
         {!loading && (
           <div className="">
             <LoginForm />
+            <div className='justify-center items-center text-indigo-400'>
+              @pridesys.it
+            </div>
           </div>
         )}
       </div>
