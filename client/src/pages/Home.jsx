@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import LoginForm from '../components/forms/LoginForm';
+import React, { useEffect, useState } from "react";
+import LoginForm from "../components/forms/LoginForm";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -13,12 +13,14 @@ const Home = () => {
   return (
     <section className="full-screen">
       <div className="flex justify-center items-center w-full h-full">
-        {loading && <i className="fa-solid fa-spinner animate-spin text-3xl text-center-block"></i>}
+        {loading && (
+          <i className="fa-solid fa-spinner animate-spin text-3xl text-center-block"></i>
+        )}
         {!loading && (
           <div className="">
             <LoginForm />
-            <div className='justify-center items-center text-indigo-400'>
-              @pridesys.it
+            <div className="justify-center items-center text-indigo-400">
+              @pridesys.it-recruitment-task
             </div>
           </div>
         )}
