@@ -1,38 +1,33 @@
-name: Deploy React to Netlify
+name: Deploy React App to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 20
+          node-version: "14" # Set the Node.js version you are using
+
+      - name: Navigate to client directory
+        run: cd client # Change directory to client
 
       - name: Install dependencies
-        working-directory: client
-        run: npm install
+        run: npm install # Install dependencies inside client folder
 
       - name: Build React app
-        working-directory: client
-        run: npm run build
+        run: npm run build # Run the build command inside client folder
 
-      - name: Deploy to Netlify
-        run: |
-          npm install -g netlify-cli
-          netlify deploy --dir=client --prod
+      - name: Deploy to GitHub Pages
+        run: npm run deploy # Deploy using gh-pages
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub token for authentication
