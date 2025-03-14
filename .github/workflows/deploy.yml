@@ -3,7 +3,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main # Trigger deployment on push to the main branch
 
 jobs:
   deploy:
@@ -16,16 +16,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14" # Set the Node.js version you are using
+          node-version: "20" # Use the appropriate Node.js version
 
       - name: Navigate to client directory
-        run: cd client # Change directory to client
+        run: cd client # Change directory to 'client' folder
 
       - name: Install dependencies
-        run: npm install # Install dependencies inside client folder
+        run: npm install # Install dependencies in the 'client' directory
 
       - name: Build React app
-        run: npm run build # Run the build command inside client folder
+        run: npm run build # Build the app in the 'client' directory
 
       - name: Deploy to GitHub Pages
         run: npm run deploy # Deploy using gh-pages
