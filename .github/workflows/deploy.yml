@@ -3,7 +3,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main # Trigger deployment on push to the main branch
+      - main
 
 jobs:
   deploy:
@@ -11,18 +11,34 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "20" # Use the appropriate Node.js version
+          node-version: "20"
 
-      - name: Install, build, and deploy
+      - name: Install dependencies
         run: |
           cd client
           npm install
+
+      - name: Build project
+        run: |
+          cd client
           npm run build
+
+      - name: Configure Git (Automatically Set User)
+        run: |
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+
+      - name: Deploy to GitHub Pages
+        run: |
+          cd client
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           npm run deploy
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub token for authentication
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
