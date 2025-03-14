@@ -18,16 +18,11 @@ jobs:
         with:
           node-version: "20" # Use the appropriate Node.js version
 
-      - name: Navigate to client directory
-        run: cd client # Change directory to 'client' folder
-
-      - name: Install dependencies
-        run: npm install # Install dependencies in the 'client' directory
-
-      - name: Build React app
-        run: npm run build # Build the app in the 'client' directory
-
-      - name: Deploy to GitHub Pages
-        run: npm run deploy # Deploy using gh-pages
+      - name: Install, build, and deploy
+        run: |
+          cd client
+          npm install
+          npm run build
+          npm run deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub token for authentication
