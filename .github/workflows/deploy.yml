@@ -29,7 +29,7 @@ jobs:
           npm run build
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify-cli@v1
+        uses: nwtgck/actions-netlify-cli@v2
         with:
           netlify_token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           netlify_site_id: ${{ secrets.NETLIFY_SITE_ID }}
