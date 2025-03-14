@@ -1,4 +1,4 @@
-name: Deploy React App to GitHub Pages
+name: Deploy to Netlify
 
 on:
   push:
@@ -9,16 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: "20"
 
@@ -27,21 +23,14 @@ jobs:
           cd client
           npm install
 
-      - name: Build project
+      - name: Build the project
         run: |
           cd client
           npm run build
 
-      - name: Configure Git
-        run: |
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --global user.name "${{ github.actor }}"
-
-      - name: Deploy to GitHub Pages
-        run: |
-          cd client
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          npm run deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# test change
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify-cli@v1
+        with:
+          netlify_token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify_site_id: ${{ secrets.NETLIFY_SITE_ID }}
+          deploy_path: ./client/dist
